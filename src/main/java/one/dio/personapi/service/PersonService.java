@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.AllArgsConstructor;
 import one.dio.personapi.dto.response.MessageResponseDTO;
 import one.dio.personapi.dto.request.PersonDTO;
 import one.dio.personapi.entity.Person;
@@ -15,15 +16,11 @@ import one.dio.personapi.mapper.PersonMapper;
 import one.dio.personapi.repository.PersonRepository;
 
 @Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonService {
 	
 	private PersonRepository personRepository;
 	private final PersonMapper personMapper = PersonMapper.INSTANCE;
-	
-	@Autowired
-	public PersonService(PersonRepository personRepository) {
-		this.personRepository = personRepository;
-	}
 	
 	private Person verifyIfExists(Long id) throws PersonNotFoundException {
 		return personRepository.findById(id).orElseThrow(() -> new PersonNotFoundException(id));
